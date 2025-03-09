@@ -2,9 +2,18 @@ import React, {createContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-export const AuthContext = createContext(null);
+// ✅ Define an interface to specify the expected context values
+interface AuthContextType {
+  userToken: string | null;
+  login: (token: string) => Promise<void>;
+  logout: () => Promise<void>;
+}
 
-export const AuthProvider = ({children}) => {
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
+  children,
+}) => {
   const [userToken, setUserToken] = useState<string | null>(null);
 
   useEffect(() => {

@@ -5,16 +5,17 @@ import {AuthContext, AuthProvider} from './context/AuthContext';
 import HomeScreen from './screens/HomeScreen';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
-import AddExpenseScreen from './screens/AddExpenseScreen';
-import EditExpenseScreen from './screens/EditExpenseScreen';
 import AddIncomeScreen from './screens/AddIncomeScreen';
+import EditExpenseScreen from './screens/EditExpenseScreen';
 import EditIncomeScreen from './screens/EditIncomeScreen';
 import FilterScreen from './screens/FilterScreen';
+import AddExpenseScreen from './screens/AddExpenseScreen';
+import {useAuth} from './hooks/useAuth';
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
-  const {userToken} = useContext(AuthContext);
+  const {userToken} = useAuth();
 
   return (
     <Stack.Navigator>

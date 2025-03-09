@@ -24,4 +24,31 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/filter", async (req, res) => {
+  try {
+    const { type, minAmount, maxAmount, description, included } = req.query;
+    const whereClause = {};
+
+    if (type) whereClause.type = type;
+    if (minAmount)
+      whereClause.amount = {
+        ...whereClause.amount,
+        $gte: parseFloat(minAmount),
+      };
+    if (maxAmount)
+      whereClause.amount = {
+        ...whereClause.amount,
+        $lte: parseFloat(maxAmount),
+      };
+    if (description) whereClause.description = { $like: `%${description}%` };
+    if (included !== undefined)
+      whereClause.included_in_total = included === "true";
+
+    const filteredExpenses = await Expense.findAll({ where: whereClause });
+    res.json(filteredExpenses);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to filter expenses" });
+  }
+});
+
 module.exports = router;

@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, Text, Alert} from 'react-native';
 import axios from 'axios';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function SignupScreen({navigation}) {
+type RootStackParamList = {
+  Signup: undefined;
+  Login: undefined;
+};
+
+type SignupScreenProps = StackScreenProps<RootStackParamList, 'Signup'>;
+
+export default function SignupScreen({navigation}: SignupScreenProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +28,8 @@ export default function SignupScreen({navigation}) {
       Alert.alert('Success', response.data.message);
       navigation.navigate('Login');
     } catch (error) {
-      Alert.alert('Error', error.response?.data?.message || 'Signup failed');
+      const err = error as any;
+      Alert.alert('Error', err.response?.data?.message || 'Signup failed');
     }
   };
 

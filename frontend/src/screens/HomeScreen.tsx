@@ -1,17 +1,43 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
-import {AuthContext} from '../context/AuthContext';
 
 export default function HomeScreen({navigation}) {
-  const {logout} = useContext(AuthContext);
   const [summary, setSummary] = useState({totalExpenditure: 0});
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/expenses/summary')
-      .then(res => setSummary(res.data));
+    fetchSummary();
+    fetchExpenses();
   }, []);
+
+  const fetchSummary = async () => {
+    const res = await axios.get('http://localhost:5000/api/expenses/summary');
+    setSummary(res.data);
+  };
+
+  const fetchExpenses = async () => {
+    const res = await axios.get('http://localhost:5000/api/expenses');
+    setExpenses(res.data);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+      Alert.alert('Deleted', 'Expense removed successfully!');
+      fetchExpenses();
+      fetchSummary();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to delete expense');
+    }
+  };
 
   return (
     <View>
@@ -21,7 +47,24 @@ export default function HomeScreen({navigation}) {
         onPress={() => navigation.navigate('Add Expense')}
       />
       <Button title="Filter" onPress={() => navigation.navigate('Filter')} />
-      <Button title="Logout" onPress={logout} />
+      <FlatList
+        data={expenses}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => (
+          <View>
+            <Text>
+              {item.description} - ₹{item.amount}
+            </Text>
+            <Button
+              title="Edit"
+              onPress={() =>
+                navigation.navigate('Edit Expense', {expense: item})
+              }
+            />
+            <Button title="Delete" onPress={() => handleDelete(item.id)} />
+          </View>
+        )}
+      />
     </View>
   );
 }

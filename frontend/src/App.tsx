@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import AddExpenseScreen from './screens/AddExpenseScreen';
+import EditExpenseScreen from './screens/EditExpenseScreen';
 import FilterScreen from './screens/FilterScreen';
 
 const Stack = createStackNavigator();
@@ -19,6 +20,7 @@ function AppNavigator() {
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Add Expense" component={AddExpenseScreen} />
+          <Stack.Screen name="Edit Expense" component={EditExpenseScreen} />
           <Stack.Screen name="Filter" component={FilterScreen} />
         </>
       ) : (

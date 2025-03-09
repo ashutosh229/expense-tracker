@@ -1,6 +1,6 @@
 const express = require("express");
-const db = require("../models");
-const messages = require("../constants/messages");
+const db = require("../../models");
+const { default: messages } = require("../constants/messages");
 
 const router = express.Router();
 

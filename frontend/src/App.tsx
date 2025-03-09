@@ -11,10 +11,7 @@ import EditIncomeScreen from './screens/EditIncomeScreen';
 import FilterScreen from './screens/FilterScreen';
 import AddExpenseScreen from './screens/AddExpenseScreen';
 import {useAuth} from './hooks/useAuth';
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -38,11 +35,6 @@ export type RootStackParamList = {
   Signup: undefined;
   Login: undefined;
 };
-
-
-
-
-
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

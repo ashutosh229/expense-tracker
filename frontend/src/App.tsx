@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {AuthContext, AuthProvider} from './context/AuthContext';
+import {AuthProvider} from './context/AuthContext';
 import HomeScreen from './screens/HomeScreen';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';

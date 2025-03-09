@@ -1,85 +1,123 @@
 const express = require("express");
-const router = express.Router();
-const { Income } = require("../models");
+const db = require("../models");
+const messages = require("../constants/messages");
 
-// Create a new income entry
+const router = express.Router();
+
+// ➤ Create Income
 router.post("/", async (req, res) => {
   try {
-    const income = await Income.create(req.body);
-    res.json(income);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to add income" });
-  }
-});
+    const { description, amount, type, included_in_total } = req.body;
+    if (!description || !amount || !type || included_in_total === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: messages.detailsNotEntered,
+      });
+    }
 
-// Get total income summary
-router.get("/summary", async (req, res) => {
-  try {
-    const totalIncome = await Income.sum("amount", {
-      where: { included_in_total: true },
+    const newIncome = await db.Income.create({
+      description,
+      amount,
+      type,
+      included_in_total,
     });
-    res.json({ totalIncome });
+
+    res.status(201).json({
+      success: true,
+      message: messages.successMessage,
+      data: newIncome,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch income summary" });
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: messages.internalServerError });
   }
 });
 
-// Get all income records
+// ➤ Get All Incomes
 router.get("/", async (req, res) => {
   try {
-    const incomes = await Income.findAll();
-    res.json(incomes);
+    const incomes = await db.Income.findAll();
+    res.status(200).json({
+      success: true,
+      message: messages.successMessage,
+      data: incomes,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch income records" });
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: messages.internalServerError });
   }
 });
 
-// Update an income entry
+// ➤ Get Single Income by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const income = await db.Income.findByPk(req.params.id);
+    if (!income)
+      return res
+        .status(404)
+        .json({ success: false, message: messages.dataNotFound });
+
+    res.status(200).json({
+      success: true,
+      message: messages.successMessage,
+      data: income,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: messages.internalServerError });
+  }
+});
+
+// ➤ Update Income
 router.put("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedIncome = await Income.update(req.body, { where: { id } });
-    res.json({ message: "Income updated successfully", updatedIncome });
+    const { description, amount, type, included_in_total } = req.body;
+    const income = await db.Income.findByPk(req.params.id);
+
+    if (!income)
+      return res
+        .status(404)
+        .json({ success: false, message: messages.dataNotFound });
+
+    await income.update({ description, amount, type, included_in_total });
+
+    res.status(200).json({
+      success: true,
+      message: messages.successMessage,
+      data: income,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to update income" });
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: messages.internalServerError });
   }
 });
 
-// Delete an income entry
+// ➤ Delete Income
 router.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    await Income.destroy({ where: { id } });
-    res.json({ message: "Income deleted successfully" });
+    const income = await db.Income.findByPk(req.params.id);
+    if (!income)
+      return res
+        .status(404)
+        .json({ success: false, message: messages.dataNotFound });
+
+    await income.destroy();
+    res
+      .status(200)
+      .json({ success: true, message: "Income deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete income" });
-  }
-});
-
-router.get("/filter", async (req, res) => {
-  try {
-    const { type, minAmount, maxAmount, description, included } = req.query;
-    const whereClause = {};
-
-    if (type) whereClause.type = type;
-    if (minAmount)
-      whereClause.amount = {
-        ...whereClause.amount,
-        $gte: parseFloat(minAmount),
-      };
-    if (maxAmount)
-      whereClause.amount = {
-        ...whereClause.amount,
-        $lte: parseFloat(maxAmount),
-      };
-    if (description) whereClause.description = { $like: `%${description}%` };
-    if (included !== undefined)
-      whereClause.included_in_total = included === "true";
-
-    const filteredIncome = await Income.findAll({ where: whereClause });
-    res.json(filteredIncome);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to filter income" });
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: messages.internalServerError });
   }
 });
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Expense } = require("../models");
+const { Op } = require("sequelize");
 
 // Update an existing expense
 router.put("/:id", async (req, res) => {
@@ -40,13 +41,15 @@ router.get("/filter", async (req, res) => {
         ...whereClause.amount,
         $lte: parseFloat(maxAmount),
       };
-    if (description) whereClause.description = { $like: `%${description}%` };
+    if (description)
+      whereClause.description = { [Op.iLike]: `%${description}%` };
     if (included !== undefined)
       whereClause.included_in_total = included === "true";
 
     const filteredExpenses = await Expense.findAll({ where: whereClause });
     res.json(filteredExpenses);
   } catch (error) {
+    console.error("Error filtering expenses:", error);
     res.status(500).json({ error: "Failed to filter expenses" });
   }
 });

@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, FlatList, Text} from 'react-native';
 import axios from 'axios';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../App';
 
-type FilterScreenProps = NativeStackScreenProps<RootStackParamList, 'Filter'>;
+type Expense = {
+  id: number;
+  description: string;
+  amount: number;
+  type: string;
+  included: boolean;
+};
 
 export default function FilterScreen() {
   const [type, setType] = useState('');
@@ -12,16 +16,20 @@ export default function FilterScreen() {
   const [maxAmount, setMaxAmount] = useState('');
   const [description, setDescription] = useState('');
   const [included, setIncluded] = useState(false);
-  const [filteredResults, setFilteredResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState<Expense[]>([]);
 
   const handleFilter = async () => {
-    const response = await axios.get(
-      'http://localhost:5000/api/expenses/filter',
-      {
-        params: {type, minAmount, maxAmount, description, included},
-      },
-    );
-    setFilteredResults(response.data);
+    try {
+      const response = await axios.get<Expense[]>(
+        'http://localhost:5000/api/expenses/filter',
+        {
+          params: {type, minAmount, maxAmount, description, included},
+        },
+      );
+      setFilteredResults(response.data);
+    } catch (error) {
+      console.error('Error fetching filtered results:', error);
+    }
   };
 
   return (

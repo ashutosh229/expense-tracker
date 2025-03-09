@@ -1,0 +1,27 @@
+const express = require("express");
+const router = express.Router();
+const { Expense } = require("../models");
+
+// Update an existing expense
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedExpense = await Expense.update(req.body, { where: { id } });
+    res.json({ message: "Expense updated successfully", updatedExpense });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update expense" });
+  }
+});
+
+// Delete an expense
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Expense.destroy({ where: { id } });
+    res.json({ message: "Expense deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete expense" });
+  }
+});
+
+module.exports = router;

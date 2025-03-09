@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, Switch, Alert} from 'react-native';
 import axios from 'axios';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function AddExpenseScreen({navigation}) {
+type RootStackParamList = {
+  Home: undefined;
+  AddExpense: undefined;
+};
+
+type AddExpenseScreenProps = StackScreenProps<RootStackParamList, 'AddExpense'>;
+
+export default function AddExpenseScreen({navigation}: AddExpenseScreenProps) {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('');

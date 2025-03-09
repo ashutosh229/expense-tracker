@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function AddIncomeScreen({navigation}) {
+type RootStackParamList = {
+  Home: undefined;
+  AddIncome: undefined;
+};
+
+type AddIncomeScreenProps = StackScreenProps<RootStackParamList, 'AddIncome'>;
+
+export default function AddIncomeScreen({navigation}: AddIncomeScreenProps) {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
 

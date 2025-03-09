@@ -2,9 +2,28 @@ import React, {useState, useContext} from 'react';
 import {View, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function LoginScreen({navigation}) {
-  const {login} = useContext(AuthContext);
+type RootStackParamList = {
+  Login: undefined;
+  Home: undefined;
+};
+
+type LoginScreenProps = StackScreenProps<RootStackParamList, 'Login'>;
+
+interface AuthContextType {
+  login: (token: string) => void;
+}
+
+export default function LoginScreen({navigation}: LoginScreenProps) {
+  const authContext = useContext(AuthContext) as AuthContextType | null;
+
+  if (!authContext) {
+    throw new Error(
+      'AuthContext is null. Ensure AuthProvider is wrapping the component tree.',
+    );
+  }
+  const {login} = authContext;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,7 +37,8 @@ export default function LoginScreen({navigation}) {
       Alert.alert('Success', 'Logged in successfully!');
       navigation.navigate('Home');
     } catch (error) {
-      Alert.alert('Error', error.response?.data?.message || 'Login failed');
+      const err = error as any;
+      Alert.alert('Error', err.response?.data?.message || 'Login failed');
     }
   };
 

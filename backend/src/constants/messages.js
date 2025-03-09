@@ -6,4 +6,5 @@ export default messages = {
   dataGettingUnsuccessful: "Data fetching unsuccessful",
   paramsNotFound: "Params are not found",
   dataNotFound: "Data is not found",
+  invalidCategory: "Category is invalid",
 };

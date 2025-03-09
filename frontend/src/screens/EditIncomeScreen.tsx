@@ -1,8 +1,25 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function EditIncomeScreen({route, navigation}) {
+type RootStackParamList = {
+  Home: undefined;
+  EditIncome: {
+    income: {
+      id: string;
+      amount: number;
+      description: string;
+    };
+  };
+};
+
+type EditIncomeScreenProps = StackScreenProps<RootStackParamList, 'EditIncome'>;
+
+export default function EditIncomeScreen({
+  route,
+  navigation,
+}: EditIncomeScreenProps) {
   const {income} = route.params;
   const [amount, setAmount] = useState(income.amount.toString());
   const [description, setDescription] = useState(income.description);

@@ -1,33 +1,64 @@
 const express = require("express");
-const router = express.Router();
-const { Income, Expense } = require("../models");
+const db = require("../models");
+const { default: messages } = require("../constants/messages");
 
-// Get financial summary
+const router = express.Router();
+
+// ➤ Get Financial Summary
 router.get("/", async (req, res) => {
   try {
-    const totalIncome = await Income.sum("amount", {
-      where: { included_in_total: true },
-    });
-    const totalExpenditure = await Expense.sum("amount", {
+    // Fetch total income
+    const totalIncome = await db.Income.sum("amount", {
       where: { included_in_total: true },
     });
 
-    const excludedIncome = await Income.sum("amount", {
-      where: { included_in_total: false },
+    // Fetch total expenses
+    const totalExpenses = await db.Expense.sum("amount", {
+      where: { included_in_total: true },
     });
-    const excludedExpenditure = await Expense.sum("amount", {
+
+    // Fetch excluded income
+    const excludedIncome = await db.Income.sum("amount", {
       where: { included_in_total: false },
     });
 
-    res.json({
-      totalIncome: totalIncome || 0,
-      totalExpenditure: totalExpenditure || 0,
-      totalSavings: (totalIncome || 0) - (totalExpenditure || 0),
-      excludedIncome: excludedIncome || 0,
-      excludedExpenditure: excludedExpenditure || 0,
+    // Fetch excluded expenses
+    const excludedExpenses = await db.Expense.sum("amount", {
+      where: { included_in_total: false },
+    });
+
+    // Fetch total borrowed dues
+    const totalBorrowed = await db.Due.sum("amount", {
+      where: { type: "borrowed", settled: false },
+    });
+
+    // Fetch total lent dues
+    const totalLent = await db.Due.sum("amount", {
+      where: { type: "lent", settled: false },
+    });
+
+    // Calculate total savings
+    const totalSavings = (totalIncome || 0) - (totalExpenses || 0);
+
+    res.status(200).json({
+      success: true,
+      message: messages.successMessage,
+      data: {
+        totalIncome: totalIncome || 0,
+        totalExpenses: totalExpenses || 0,
+        totalSavings,
+        excludedIncome: excludedIncome || 0,
+        excludedExpenses: excludedExpenses || 0,
+        totalBorrowed: totalBorrowed || 0,
+        totalLent: totalLent || 0,
+      },
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch financial summary" });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: messages.internalServerError,
+    });
   }
 });
 

@@ -1,4 +1,4 @@
-export default messages = {
+const messages = {
   detailsNotEntered: "Please enter all the details",
   dataCreationUnsuccessful: "Not created successfully",
   successMessage: "Successfully done the task",
@@ -8,3 +8,5 @@ export default messages = {
   dataNotFound: "Data is not found",
   invalidCategory: "Category is invalid",
 };
+
+module.exports = messages;

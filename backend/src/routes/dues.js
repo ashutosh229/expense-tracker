@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
       data: newDue,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, message: messages.internalServerError });
@@ -45,6 +46,7 @@ router.get("/", async (req, res) => {
       data: dues,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, message: messages.internalServerError });
@@ -66,6 +68,7 @@ router.get("/:id", async (req, res) => {
       data: due,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, message: messages.internalServerError });
@@ -91,6 +94,7 @@ router.put("/:id", async (req, res) => {
       data: due,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, message: messages.internalServerError });
@@ -111,6 +115,7 @@ router.delete("/:id", async (req, res) => {
       .status(200)
       .json({ success: true, message: "Due deleted successfully" });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, message: messages.internalServerError });

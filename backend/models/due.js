@@ -31,8 +31,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("Borrowed", "Lent"),
         allowNull: false,
+      },
+      settled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      due_date: {
+        type: DataTypes.DATE,
+        allowNull: true, // Optional field
       },
     },
     {

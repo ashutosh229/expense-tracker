@@ -10,8 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "axios": "^1.8.2",
     "react": "19.0.0",
     "react-native": "0.78.0",
+    "react-native-paper": "^5.13.1",
+    "react-navigation": "^5.0.0",
     "yarn": "^1.22.22"
   },
   "devDependencies": {

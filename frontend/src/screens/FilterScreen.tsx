@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, FlatList, Text} from 'react-native';
 import axios from 'axios';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
+
+type FilterScreenProps = NativeStackScreenProps<RootStackParamList, 'Filter'>;
 
 export default function FilterScreen() {
   const [type, setType] = useState('');

@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button} from 'react-native';
 import axios from 'axios';
-import {StackScreenProps} from '@react-navigation/stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
-type RootStackParamList = {
-  Home: undefined;
-  'Add Expense': undefined;
-  'Add Income': undefined;
-};
-
-type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 interface Summary {
   totalIncome: number;
@@ -51,11 +46,11 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
 
       <Button
         title="Add Expense"
-        onPress={() => navigation.navigate('Add Expense')}
+        onPress={() => navigation.navigate('AddExpense')}
       />
       <Button
         title="Add Income"
-        onPress={() => navigation.navigate('Add Income')}
+        onPress={() => navigation.navigate('AddIncome')}
       />
     </View>
   );

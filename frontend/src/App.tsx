@@ -11,8 +11,40 @@ import EditIncomeScreen from './screens/EditIncomeScreen';
 import FilterScreen from './screens/FilterScreen';
 import AddExpenseScreen from './screens/AddExpenseScreen';
 import {useAuth} from './hooks/useAuth';
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  AddExpense: undefined;
+  EditExpense: {
+    expense: {
+      id: string;
+      amount: number;
+      description: string;
+    };
+  };
+  AddIncome: undefined;
+  EditIncome: {
+    income: {
+      id: string;
+      amount: number;
+      description: string;
+    };
+  };
+  Filter: undefined;
+  Signup: undefined;
+  Login: undefined;
+};
+
+
+
+
+
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppNavigator() {
   const {userToken} = useAuth();
@@ -22,10 +54,10 @@ function AppNavigator() {
       {userToken ? (
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Add Expense" component={AddExpenseScreen} />
-          <Stack.Screen name="Edit Expense" component={EditExpenseScreen} />
-          <Stack.Screen name="Add Income" component={AddIncomeScreen} />
-          <Stack.Screen name="Edit Income" component={EditIncomeScreen} />
+          <Stack.Screen name="AddExpense" component={AddExpenseScreen} />
+          <Stack.Screen name="EditExpense" component={EditExpenseScreen} />
+          <Stack.Screen name="AddIncome" component={AddIncomeScreen} />
+          <Stack.Screen name="EditIncome" component={EditIncomeScreen} />
           <Stack.Screen name="Filter" component={FilterScreen} />
         </>
       ) : (

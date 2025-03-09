@@ -2,14 +2,10 @@ import React, {useState, useContext} from 'react';
 import {View, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext';
-import {StackScreenProps} from '@react-navigation/stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
-type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-};
-
-type LoginScreenProps = StackScreenProps<RootStackParamList, 'Login'>;
+type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 interface AuthContextType {
   login: (token: string) => void;

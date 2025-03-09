@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
 import {View, TextInput, Button, Text, Alert} from 'react-native';
 import axios from 'axios';
-import {StackScreenProps} from '@react-navigation/stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
-type RootStackParamList = {
-  Signup: undefined;
-  Login: undefined;
-};
-
-type SignupScreenProps = StackScreenProps<RootStackParamList, 'Signup'>;
+type SignupScreenProps = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
 export default function SignupScreen({navigation}: SignupScreenProps) {
   const [name, setName] = useState('');

@@ -1,8 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button} from 'react-native';
 import axios from 'axios';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export default function HomeScreen({navigation}) {
+type RootStackParamList = {
+  Home: undefined;
+  'Add Expense': undefined;
+  'Add Income': undefined;
+};
+
+type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
+
+interface Summary {
+  totalIncome: number;
+  totalExpenditure: number;
+  totalSavings: number;
+  excludedIncome: number;
+  excludedExpenditure: number;
+}
+
+export default function HomeScreen({navigation}: HomeScreenProps) {
   const [summary, setSummary] = useState({
     totalIncome: 0,
     totalExpenditure: 0,
@@ -17,7 +34,7 @@ export default function HomeScreen({navigation}) {
 
   const fetchSummary = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/summary');
+      const res = await axios.get<Summary>('http://localhost:5000/api/summary');
       setSummary(res.data);
     } catch (error) {
       console.error('Failed to fetch summary', error);

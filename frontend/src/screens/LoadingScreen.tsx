@@ -1,4 +1,5 @@
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
+import Layout from '../components/Layout';
 
 interface LoadingScreenProps {
   message?: string;
@@ -6,10 +7,12 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({message}) => {
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#4F46E5" />
-      {message && <Text style={styles.message}>{message}</Text>}
-    </View>
+    <Layout>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#4F46E5" />
+        {message && <Text style={styles.message}>{message}</Text>}
+      </View>
+    </Layout>
   );
 };
 

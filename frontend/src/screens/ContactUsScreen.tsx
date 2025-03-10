@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Layout from '../components/Layout';
 
 const ContactUsScreen = () => {
   const [name, setName] = useState('');
@@ -27,38 +28,40 @@ const ContactUsScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#ff7e5f', '#feb47b']} style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Contact Us</Text>
-        <TextInput
-          placeholder="Your Name"
-          value={name}
-          onChangeText={setName}
-          style={styles.input}
-          placeholderTextColor="#fff"
-        />
-        <TextInput
-          placeholder="Your Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          style={styles.input}
-          placeholderTextColor="#fff"
-        />
-        <TextInput
-          placeholder="Your Message"
-          value={message}
-          onChangeText={setMessage}
-          multiline
-          numberOfLines={4}
-          style={[styles.input, styles.messageInput]}
-          placeholderTextColor="#fff"
-        />
-        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-          <Text style={styles.buttonText}>Send Message</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </LinearGradient>
+    <Layout>
+      <LinearGradient colors={['#ff7e5f', '#feb47b']} style={styles.container}>
+        <ScrollView contentContainerStyle={styles.content}>
+          <Text style={styles.title}>Contact Us</Text>
+          <TextInput
+            placeholder="Your Name"
+            value={name}
+            onChangeText={setName}
+            style={styles.input}
+            placeholderTextColor="#fff"
+          />
+          <TextInput
+            placeholder="Your Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            style={styles.input}
+            placeholderTextColor="#fff"
+          />
+          <TextInput
+            placeholder="Your Message"
+            value={message}
+            onChangeText={setMessage}
+            multiline
+            numberOfLines={4}
+            style={[styles.input, styles.messageInput]}
+            placeholderTextColor="#fff"
+          />
+          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            <Text style={styles.buttonText}>Send Message</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </LinearGradient>
+    </Layout>
   );
 };
 

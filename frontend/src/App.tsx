@@ -1,11 +1,12 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import {SidebarProvider} from './context/SidebarContext';
+import HomeScreen from './screens/HomeScreen';
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <SidebarProvider>
+      <HomeScreen />
+    </SidebarProvider>
   );
 };
 

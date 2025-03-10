@@ -1,11 +1,11 @@
 import React from 'react';
 import {SidebarProvider} from './context/SidebarContext';
-import HomeScreen from './screens/HomeScreen';
+import AppNavigator from './navigation/AppNavigator';
 
 const App: React.FC = () => {
   return (
     <SidebarProvider>
-      <HomeScreen />
+      <AppNavigator></AppNavigator>
     </SidebarProvider>
   );
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
 import {useSidebar} from '../context/SidebarContext';
+import {useNavigation} from '@react-navigation/native';
 
 const Sidebar: React.FC = () => {
   const {isSidebarOpen, toggleSidebar} = useSidebar();
   const slideAnim = new Animated.Value(isSidebarOpen ? 0 : -250);
+  const navigation = useNavigation();
 
   Animated.timing(slideAnim, {
     toValue: isSidebarOpen ? 0 : -250,
@@ -12,27 +14,34 @@ const Sidebar: React.FC = () => {
     useNativeDriver: false,
   }).start();
 
+  const navigateToScreen = (screen: string) => {
+    toggleSidebar(); // Close sidebar
+    navigation.navigate(screen as never); // Navigate to screen
+  };
+
+  const sidebarLinks = [
+    'Register',
+    'Login',
+    'About Us',
+    'Contact',
+    'Statistics',
+    'Income',
+    'Expense',
+    'Dues',
+    'Payment',
+  ];
+
   return (
     <>
       {isSidebarOpen && (
         <TouchableOpacity style={styles.overlay} onPress={toggleSidebar} />
       )}
       <Animated.View style={[styles.sidebar, {left: slideAnim}]}>
-        {[
-          'Register',
-          'Login',
-          'About Us',
-          'Contact',
-          'Statistics',
-          'Income',
-          'Expense',
-          'Dues',
-          'Payment',
-        ].map(item => (
+        {sidebarLinks.map(item => (
           <TouchableOpacity
             key={item}
             style={styles.item}
-            onPress={toggleSidebar}>
+            onPress={() => navigateToScreen(item)}>
             <Text style={styles.text}>{item}</Text>
           </TouchableOpacity>
         ))}

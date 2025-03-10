@@ -17,6 +17,8 @@
     "@react-navigation/stack": "^7.1.2",
     "axios": "^1.8.2",
     "expo-linear-gradient": "^14.0.2",
+    "moti": "^0.30.0",
+    "numeral": "^2.0.6",
     "react": "19.0.0",
     "react-native": "0.78.0",
     "react-native-gesture-handler": "^2.24.0",

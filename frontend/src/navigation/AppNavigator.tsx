@@ -10,13 +10,6 @@ import {ActivityIndicator, View} from 'react-native';
 import AboutUsScreen from '../screens/AboutUsScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import IncomeScreen from '../screens/IncomeScreen';
-// import AboutScreen from '../screens/AboutScreen';
-// import ContactScreen from '../screens/ContactScreen';
-// import StatisticsScreen from '../screens/StatisticsScreen';
-// import IncomeScreen from '../screens/IncomeScreen';
-// import ExpenseScreen from '../screens/ExpenseScreen';
-// import DuesScreen from '../screens/DuesScreen';
-// import PaymentScreen from '../screens/PaymentScreen';
 
 const Stack = createStackNavigator();
 

@@ -9,6 +9,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import {ActivityIndicator, View} from 'react-native';
 import AboutUsScreen from '../screens/AboutUsScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
+import IncomeScreen from '../screens/IncomeScreen';
 // import AboutScreen from '../screens/AboutScreen';
 // import ContactScreen from '../screens/ContactScreen';
 // import StatisticsScreen from '../screens/StatisticsScreen';
@@ -51,8 +52,15 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="Contact Us"
           component={ContactUsScreen}></Stack.Screen>
+        <Stack.Screen name="Loading" component={LoadingScreen}></Stack.Screen>
         {/* protected screens */}
-        {user ? <></> : null}
+        {user ? (
+          <>
+            <Stack.Screen name="Income" component={IncomeScreen}></Stack.Screen>
+          </>
+        ) : (
+          <Stack.Screen name="Loading" component={LoadingScreen}></Stack.Screen>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

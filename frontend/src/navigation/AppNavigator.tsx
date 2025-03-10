@@ -10,6 +10,7 @@ import {ActivityIndicator, View} from 'react-native';
 import AboutUsScreen from '../screens/AboutUsScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import IncomeScreen from '../screens/IncomeScreen';
+import ExpenseScreen from '../screens/ExpenseScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,9 @@ const AppNavigator: React.FC = () => {
         {user ? (
           <>
             <Stack.Screen name="Income" component={IncomeScreen}></Stack.Screen>
+            <Stack.Screen
+              name="Expense"
+              component={ExpenseScreen}></Stack.Screen>
           </>
         ) : (
           <Stack.Screen name="Loading" component={LoadingScreen}></Stack.Screen>

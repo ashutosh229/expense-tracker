@@ -7,6 +7,8 @@ import LoginScreen from '../screens/LoginScreen';
 import {AuthContext, useAuth} from '../context/AuthContext';
 import LoadingScreen from '../screens/LoadingScreen';
 import {ActivityIndicator, View} from 'react-native';
+import AboutUsScreen from '../screens/AboutUsScreen';
+import ContactUsScreen from '../screens/ContactUsScreen';
 // import AboutScreen from '../screens/AboutScreen';
 // import ContactScreen from '../screens/ContactScreen';
 // import StatisticsScreen from '../screens/StatisticsScreen';
@@ -45,6 +47,10 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="About Us" component={AboutUsScreen}></Stack.Screen>
+        <Stack.Screen
+          name="Contact Us"
+          component={ContactUsScreen}></Stack.Screen>
         {/* protected screens */}
         {user ? <></> : null}
       </Stack.Navigator>

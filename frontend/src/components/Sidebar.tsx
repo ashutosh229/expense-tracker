@@ -20,10 +20,11 @@ const Sidebar: React.FC = () => {
   };
 
   const sidebarLinks = [
+    'Home',
     'Register',
     'Login',
     'About Us',
-    'Contact',
+    'Contact Us',
     'Statistics',
     'Income',
     'Expense',

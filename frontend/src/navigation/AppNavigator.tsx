@@ -12,6 +12,7 @@ import ContactUsScreen from '../screens/ContactUsScreen';
 import IncomeScreen from '../screens/IncomeScreen';
 import ExpenseScreen from '../screens/ExpenseScreen';
 import SummaryScreen from '../screens/SummaryScreen';
+import DuesScreen from '../screens/DueScreen';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,7 @@ const AppNavigator: React.FC = () => {
             <Stack.Screen
               name="Statistics"
               component={SummaryScreen}></Stack.Screen>
+            <Stack.Screen name="Dues" component={DuesScreen}></Stack.Screen>
           </>
         ) : (
           <Stack.Screen name="Loading" component={LoadingScreen}></Stack.Screen>

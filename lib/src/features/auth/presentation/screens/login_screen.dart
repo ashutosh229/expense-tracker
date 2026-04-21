@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../validators/auth_validators.dart';
+import '../widgets/auth_footer_link.dart';
 import '../widgets/auth_scaffold.dart';
 import '../widgets/auth_text_field.dart';
+import '../widgets/primary_auth_button.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -30,47 +34,48 @@ class _LoginScreenState extends State<LoginScreen> {
       title: 'Welcome back',
       subtitle:
           'Log in with your registered email and password to continue.',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AuthTextField(
-            controller: _emailController,
-            label: 'Email address',
-            hintText: 'you@example.com',
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-          ),
-          const SizedBox(height: 16),
-          AuthTextField(
-            controller: _passwordController,
-            label: 'Password',
-            hintText: 'Enter your password',
-            obscureText: true,
-            textInputAction: TextInputAction.done,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: const Text('Log in'),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Need an account?'),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(
-                    RegisterScreen.routeName,
-                  );
-                },
-                child: const Text('Go to registration page'),
-              ),
-            ],
-          ),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AuthTextField(
+              controller: _emailController,
+              label: 'Email address',
+              hintText: 'you@example.com',
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              validator: AuthValidators.email,
+            ),
+            const SizedBox(height: 16),
+            AuthTextField(
+              controller: _passwordController,
+              label: 'Password',
+              hintText: 'Enter your password',
+              obscureText: true,
+              textInputAction: TextInputAction.done,
+              validator: AuthValidators.password,
+            ),
+            const SizedBox(height: 24),
+            PrimaryAuthButton(
+              label: 'Log in',
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                _formKey.currentState?.validate();
+              },
+            ),
+            const SizedBox(height: 16),
+            AuthFooterLink(
+              label: 'Need an account?',
+              actionLabel: 'Go to registration page',
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(
+                  RegisterScreen.routeName,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

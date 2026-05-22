@@ -8,10 +8,10 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: expense_tracker
     ports:
-      - "5433:5432"
+      - '5433:5432'
     volumes:
       - expense_tracker_postgres:/var/lib/postgresql/data
-
+# TODO: Seperate development, testing and production env
   postgres_test:
     image: postgres:16-alpine
     container_name: expense_tracker_postgres_test
@@ -21,7 +21,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: expense_tracker_test
     ports:
-      - "5433:5432"
+      - '5434:5432'
     volumes:
       - expense_tracker_postgres_test:/var/lib/postgresql/data
 
